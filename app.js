@@ -1,6 +1,6 @@
 gsap.registerPlugin(ScrollTrigger)
 gsap.registerPlugin(ScrollToPlugin)
-gsap.registerPlugin(MotionPathPlugin)
+    // gsap.registerPlugin(MotionPathPlugin)
 let triangle = document.querySelector('.triangle')
 let bodyScrollBar
 
@@ -8,7 +8,7 @@ function smoothScroll() {
     // let Scrollbar = window.Scrollbar
     // console.log(Scrollbar)
     bodyScrollBar = Scrollbar.init(document.querySelector('.viewPort'), {
-        damping: 0.05,
+        damping: 0.07,
     })
     const viewport = document.querySelector('.viewPort')
     bodyScrollBar.track.xAxis.element.remove()
@@ -36,79 +36,82 @@ function smoothScroll() {
 }
 smoothScroll()
 
-let t1 = gsap.timeline()
+function randomAnimation() {
+    let t1 = gsap.timeline()
 
-t1.fromTo(
-    '.dot', {
-        AutoAlpha: 0,
-        opacity: 0,
-        duration: 0.5,
-        // y: -10,
-        scaleX: 0,
-        scaleY: 0,
-        ease: 'back',
-        delay: 0.5,
-    }, {
-        duration: 0.5,
-        autoAlpha: 1,
-        opacity: 1,
-        scaleX: 1,
-        scaleY: 1,
-        ease: 'back',
-        onComplete: () => {
-            triangle.classList.add('rotate_around_circle')
-        },
-        delay: 0.5,
-    },
-)
-
-gsap.to('.triangle', {
-    delay: 1,
-    duration: 0.5,
-    zIndex: 2,
-    opacity: 1,
-    ease: 'power4',
-})
-gsap.registerEffect({
-    name: 'popout',
-    effect: (target, config) => {
-        return gsap.fromTo(
-            target, {
-                AutoAlpha: 0,
-                opacity: 0,
-                duration: 0.5,
-                delay: config.delay,
-                // y: -10,
-                scaleX: 0,
-                scaleY: 0,
-                ease: 'back',
-            }, {
-                delay: config.delay,
-                duration: 0.5,
-                autoAlpha: 1,
-                opacity: 1,
-                scaleX: config.scaleX,
-                scaleY: config.scaleY,
-                ease: 'back',
+    t1.fromTo(
+        '.dot', {
+            AutoAlpha: 0,
+            opacity: 0,
+            duration: 1,
+            // y: -10,
+            scaleX: 0,
+            scaleY: 0,
+            ease: 'back',
+            delay: 1,
+        }, {
+            duration: 0.5,
+            autoAlpha: 1,
+            opacity: 1,
+            scaleX: 1,
+            scaleY: 1,
+            ease: 'back',
+            onComplete: () => {
+                triangle.classList.add('rotate_around_circle')
+                    // console.log('hello')
             },
-        )
-    },
-    defaults: { duration: 0.5, scaleX: 1, scaleY: 1 },
-})
+            delay: 0.5,
+        },
+    )
 
-gsap.effects.popout('.decor-circle', { delay: 0.1 })
-gsap.effects.popout('.decor-circle1', { delay: 0.2 })
-gsap.effects.popout('.decor-circle2', { delay: 0.3 })
-gsap.effects.popout('.decor-circle3', { delay: 0.2 })
-gsap.effects.popout('.decor-circle4', { delay: 0.5 })
-gsap.effects.popout('.decor-circle5', { delay: 0.6 })
-gsap.effects.popout('.dot1', { delay: 0 })
+    gsap.to('.triangle', {
+        delay: 2,
+        duration: 0.5,
+        zIndex: 2,
+        opacity: 1,
+        ease: 'power4',
+    })
+    gsap.registerEffect({
+        name: 'popout',
+        effect: (target, config) => {
+            return gsap.fromTo(
+                target, {
+                    AutoAlpha: 0,
+                    opacity: 0,
+                    duration: 0.7,
+                    delay: config.delay,
+                    // y: -10,
+                    scaleX: 0,
+                    scaleY: 0,
+                    ease: 'back',
+                }, {
+                    delay: config.delay,
+                    duration: 0.5,
+                    autoAlpha: 1,
+                    opacity: 1,
+                    scaleX: config.scaleX,
+                    scaleY: config.scaleY,
+                    ease: 'back',
+                },
+            )
+        },
+        defaults: { duration: 0.5, scaleX: 1, scaleY: 1 },
+    })
 
-gsap.set('.triangle', {
-    xPercent: -50,
-    yPercent: -50,
-    transformOrigin: '50% 50%',
-})
+    gsap.effects.popout('.decor-circle', { delay: 2.2 })
+    gsap.effects.popout('.decor-circle1', { delay: 2.2 })
+    gsap.effects.popout('.decor-circle2', { delay: 2.3 })
+    gsap.effects.popout('.decor-circle3', { delay: 2.2 })
+    gsap.effects.popout('.decor-circle4', { delay: 2.5 })
+    gsap.effects.popout('.decor-circle5', { delay: 2.6 })
+    gsap.effects.popout('.dot1', { delay: 3 })
+
+    gsap.set('.triangle', {
+        xPercent: -50,
+        yPercent: -50,
+        transformOrigin: '50% 50%',
+    })
+}
 
 // gsap.to('.triangle', {
 //     duration: 1,
@@ -256,6 +259,15 @@ function parallax(e) {
         })
     })
 
+    gsap.to('.text', {
+        duration: 1.2,
+        x: xCord * 20 + offset(1),
+        y: yCord * 30 + offset(1),
+        rotationX: xCord * 10,
+        rotationY: yCord * 40,
+        ease: 'Power4.out',
+    })
+
     imgs_r.forEach((img, index) => {
         gsap.to(img, {
             duration: 1.2,
@@ -290,8 +302,8 @@ function hoverReveal(e) {
     })
 
     if (e.type === 'mouseenter')
-        t1.to(mask, { yPercent: 0 })
-        .to(img, { yPercent: 0 }, 0)
+        t1.to(mask, { yPercent: -1 })
+        .to(img, { yPercent: -1 }, 0)
         .to(text, { yPercent: -explanation.clientHeight / 2 }, 0)
         .to(explanationMask, { yPercent: 0 }, 0)
         .to(explanationP, { yPercent: 0 }, 0)
@@ -348,17 +360,20 @@ function progress() {
 
 function progressBarReveal() {
     let tl = gsap.timeline()
+    const leftgp = document.querySelectorAll('.left')
 
-    tl.from('.left', {
-        x: -60,
-        // delay: 0.1,
+    gsap.from('.left', {
+        x: -100,
+        delay: 0.2,
         stagger: 1,
         autoAlpha: 0,
         duration: 1.2,
         scrollTrigger: {
-            trigger: '.software-skils',
-            start: 'top-=600 top',
-            end: 'bottom-=250 bottom',
+            trigger: '#triger_id_flags',
+            start: 'top+=4300 bottom',
+            // start: 'top+=1000 bottom',
+            // end: 'bottom-=250 bottom',
+            // id: 'flash',
             // markers: true,
             onEnter: () => {
                 progress()
@@ -366,17 +381,22 @@ function progressBarReveal() {
             scrub: 1,
         },
         ease: 'power1.out',
+        // onEnter: () => {
+        //         //     console.log(item)
     })
-    tl.from('.right', {
-        x: 60,
-        // delay: 0.1,
+
+    gsap.from('.right', {
+        x: 100,
+        // delay: 3,
         stagger: 1,
         autoAlpha: 0,
         duration: 1.2,
         scrollTrigger: {
-            trigger: '.software-skils',
-            start: 'top-=600 top',
-            end: 'bottom-=250 bottom',
+            trigger: '#triger_id_flags',
+            start: 'top+=4300 bottom',
+            // start: 'top+=1000 bottom',
+            // end: 'bottom-=250 bottom',
+            id: 'flash',
             // markers: true,
             onEnter: () => {
                 progress()
@@ -411,11 +431,12 @@ function showcaseReveal() {
         stagger: 0.5,
         duration: 1,
         scrollTrigger: {
+            // markers: true,
             id: 'my -1',
             trigger: '.showcase-1',
             start: 'top 50%',
         },
-        scrub: 1,
+        scrub: true,
     })
     gsap.from('.showcase-2', {
         x: 100,
@@ -424,10 +445,11 @@ function showcaseReveal() {
         stagger: 0.5,
         duration: 1,
         scrollTrigger: {
+            // markers: true,
             trigger: '.showcase-2',
             start: 'top 50%',
         },
-        scrub: 1,
+        scrub: true,
     })
 }
 
@@ -462,7 +484,7 @@ function categoryReveal(e) {
         const tl = gsap.timeline()
         tl.to([frameL, frameS], { autoAlpha: 0 }, 0).to(
             links, {
-                color: '#1e2022',
+                color: '#000000',
                 autoAlpha: 0.2,
             },
             0,
@@ -494,17 +516,26 @@ function fieldsReveal() {
 
 function parrallaxReveal() {
     const images = gsap.utils.toArray('.parallax')
+    ScrollTrigger.refresh()
     images.forEach((div) => {
-        const img = div.querySelector('.info__image img')
-            // console.log(img)
+        let img = div.querySelector('.info__image img')
+        console.log(img)
         gsap.to(img, {
             yPercent: 20,
-            scrollTrigger: {
-                // markers: true,
-                trigger: img,
-                scrub: true,
-            },
             ease: 'none',
+            scrollTrigger: {
+                id: 'image',
+                // markers: true,
+                trigger: '.trigger',
+                start: 'bottom+=4400 center',
+                end: '+=500',
+                scrub: true,
+                onStart: () => {
+                    console.log(img)
+                },
+            },
+            ease: 'power2',
+            duration: 0.5,
         })
     })
 }
@@ -515,9 +546,9 @@ function pinning() {
     ScrollTrigger.create({
         trigger: links,
         pin: true,
-        pinSpacing: false,
+        pinSpacing: true,
         start: 'top center',
-        markers: true,
+        // markers: true,
         endTrigger: '.contact',
         end: 'bottom bottom+=900',
         pinReparent: true,
@@ -526,18 +557,18 @@ function pinning() {
         // console.log(infos)
     infos.forEach((ele, index) => {
         const links = document.querySelectorAll('.fixed-nav li')
-            // console.log(links)
+
         ScrollTrigger.create({
             trigger: ele,
-            start: 'top center',
-            end: `+=${ele.clientHeight}`,
-            // markers: true,
+            start: 'top+=4900 center',
+            end: `+=1000`,
+            id: 'afwerugbiewrugbeiugbieurtgtgun',
+            markers: true,
             toggleClass: {
                 targets: links[index],
                 className: 'is-active',
             },
             onEnter: () => {
-                // console.log(links)
                 let color = links[index].querySelector('a').dataset.color
                 document.documentElement.style.setProperty('--background-color', color)
             },
@@ -588,12 +619,93 @@ function scrollto() {
 //     },
 // })
 
+function loadingReveal() {
+    let timeline = gsap.timeline({
+        defaults: { duration: 1.2, ease: 'power2.out' }, //tweek duration later
+        onComplete: () => {
+            document.body.classList.remove('is-loading')
+            randomAnimation()
+        },
+    })
+
+    timeline
+        .set(['.loader', '.loader-content'], { autoAlpha: 1 })
+        .to('.loader .inner', {
+            scaleY: 1,
+            ease: 'power2.out',
+            duration: 0.9,
+            // autoAlpha: 0.5,
+        })
+        .addLabel('reveal')
+        .from(
+            '.loader-image-mask', {
+                yPercent: 100,
+                // ease: 'power2.out',
+                // duration: 1.5,
+                // delay: 0.1,
+            },
+            'reveal-=0.6',
+        )
+        .from(
+            '.loader-image-mask img', {
+                yPercent: -90,
+                // ease: 'power2.out',
+                // duration: 1.7,
+                // delay: 0.5,
+            },
+            'reveal-=0.6',
+        )
+        .from(
+            [
+                '.loader-title-mask:nth-child(1) span',
+                '.loader-title-mask:nth-child(2) span',
+            ], {
+                yPercent: 100,
+                stagger: 0.1,
+            },
+            'reveal-=0.4',
+        )
+
+    const timelineOut = gsap.timeline({
+        defaults: {
+            duration: 1.2,
+            ease: 'power2.inOut',
+        },
+        delay: 1,
+    })
+
+    timelineOut
+        .to('.loader-title-mask', { yPercent: -300, stagger: 0.2 }, 0)
+        // .to('.loader-image img', { yPercent: -300, stagger: 0.5 }, 0)
+        .to(['.loader', '.loader-content'], { yPercent: -100, stagger: true }, 0.5)
+        .from('.viewPort', { y: 150 }, 0)
+
+    let mainTimeline = gsap.timeline()
+    mainTimeline.add(timeline).add(timelineOut)
+}
+
+gsap.set('.loader .inner', {
+    scaleY: 0.005,
+    transformOrigin: 'bottom',
+})
+
+gsap.to('.loader .progress', {
+    scaleX: 0,
+    ease: 'none',
+    transformOrigin: 'right',
+    duration: 2,
+    onComplete: () => {
+        loadingReveal() //tweek duration later
+    },
+})
+
 window.addEventListener('load', function() {
     reveal()
     progressBarReveal()
     showcaseReveal()
     fieldsReveal()
-    parrallaxReveal()
+
+    // parrallaxReveal()
     pinning()
     scrollto()
         // setHeight()
